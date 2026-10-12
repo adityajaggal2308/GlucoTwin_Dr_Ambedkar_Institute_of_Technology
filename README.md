@@ -8,19 +8,40 @@
 
 *Above: a real patient at 09:15. GlucoTwin raises a hypoglycaemia alert (32 % risk). The dotted line shows what really happened next: glucose fell below 70 mg/dL about 1.5 hours later.*
 
+## Submission quick links
+
+| Item | Link |
+|---|---|
+| 🎥 **Demo video (15–20 min, unlisted YouTube)** | _Video link to be added_ |
+| 🏗️ **Architecture diagram (PDF)** | [docs/architecture.pdf](docs/architecture.pdf) |
+| 📊 **Presentation (PDF)** — project details and outcomes | [docs/presentation.pdf](docs/presentation.pdf) |
+| 📜 **Open-source license** | [MIT License](LICENSE) — see [section 13](#13-open-source-license) |
+
+All files in this repository and all links above are publicly accessible; no sign-in or access request is needed.
+
 ## 1. Team details
 
 | | |
 |---|---|
 | **Team name** | GlucoTwin |
-| **College** | Dr. Ambedkar Institute of Technology |
-| **Team leader** | Aditya Jaggal — B.Tech Computer Science and Business Systems (CSBS), `<Year>` |
+| **Team leader** | Aditya Jaggal — B.E. Computer Science and Business Systems (CSBS), 4th year |
+| **Team size** | 1 (solo participant) |
 
-## 2. Project title
+## 2. College / Incubator information
+
+| | |
+|---|---|
+| **College** | Dr. Ambedkar Institute of Technology (Dr. AIT), Bengaluru, Karnataka |
+| **Department** | Computer Science and Business Systems (CSBS) |
+| **Incubator** | Not applicable (student team) |
+
+## 3. Project title
 
 **GlucoTwin: a hybrid mechanistic + machine-learning Digital Twin that predicts hypoglycaemia and hyperglycaemia 2 hours ahead in Type 2 Diabetes**
 
-## 3. Problem statement and healthcare use case
+## 4. Problem statement and healthcare use case
+
+### Problem statement
 
 India has about **101 million people with diabetes** (ICMR-INDIAB, 2023). Two kinds of glucose events cause most of the harm:
 
@@ -29,7 +50,9 @@ India has about **101 million people with diabetes** (ICMR-INDIAB, 2023). Two ki
 
 Care is still **reactive**: an HbA1c test every three months and the occasional glucometer reading. Continuous glucose monitors (CGMs) and smartwatches now produce data every few minutes, but nobody turns that data into **foresight** for the doctor.
 
-**Use case.** A diabetologist remotely monitors a panel of patients who wear a CGM, and optionally a smartwatch. Every 15 minutes GlucoTwin:
+### Healthcare use case
+
+A diabetologist remotely monitors a panel of patients who wear a CGM, and optionally a smartwatch. Every 15 minutes GlucoTwin:
 
 1. **Predicts** the probability of a **low (< 70)** and of a **high (> 180)** within the next 2 hours.
 2. **Explains** which data stream drives each alert: CGM trend, meals, insulin doses, routine, EHR, twin physiology, or wearables.
@@ -39,9 +62,11 @@ Care is still **reactive**: an HbA1c test every three months and the occasional 
 6. **Generates reports**: a printable 2-page PDF report per patient, plus CSV downloads of the patient timeline and the worklist.
 7. **Triages**: a worklist ranks the whole panel by current low and high risk.
 
-## 4. How the Digital Twin works
+## 5. How the Digital Twin works (architecture)
 
 ![Architecture](docs/figures/architecture.png)
+
+📄 **Full architecture diagram (PDF):** [docs/architecture.pdf](docs/architecture.pdf)
 
 ### Two data sources, one pipeline
 
@@ -66,15 +91,17 @@ Both sources are converted into one shared format ([records.py](glucotwin/record
 
 The smartwatch reacts physiologically: heart rate rises and HRV falls during a low. Lab values such as HbA1c are derived from the simulated glucose, so the two streams stay consistent.
 
-### The hybrid twin: mechanistic + ML
+## 6. AI/ML model and framework details
+
+**Model type:** hybrid Digital Twin = per-patient mechanistic physiology model + two calibrated gradient-boosted tree classifiers. **Framework:** scikit-learn (`HistGradientBoostingClassifier`; Platt scaling via `LogisticRegression` on held-out patients; `GroupKFold`), NumPy least-squares for twin calibration. **Prediction targets:** P(glucose < 70 mg/dL within 2 h) and P(glucose > 180 mg/dL within 2 h), refreshed every 15 minutes. **Validation:** 5-fold cross-validation grouped by patient on 100 real T2D patients.
 
 - **Mechanistic layer** ([twin.py](glucotwin/twin.py)): during the first days of wear, each patient's twin learns a personal overnight baseline, carb gain and glucose clearance rate. It fits a gamma-absorption → first-order-clearance model to that patient's own post-meal CGM curves, and also learns their personal meal routine. The calibrated twin powers the **what-if simulator** and feeds the ML layer.
 - **ML layer** ([model.py](glucotwin/model.py), [features.py](glucotwin/features.py)): two gradient-boosted tree classifiers (scikit-learn `HistGradientBoostingClassifier`), one for **lows** and one for **highs**. They use up to 60 fused features: CGM trend, carbs on board, insulin on board, routine, EHR, twin parameters and wearables. On real patients, 43 of those features are available. Probabilities are **calibrated** (Platt scaling on held-out patients), so a displayed "30 %" means roughly 30 %.
 - **Explainability**: each prediction is broken down by feature group ("risk points vs a typical patient"), and group permutation importance is computed across the cohort.
 
-## 5. Results
+## 7. Results
 
-### 5a. Real patients: 5-fold cross-validation grouped by patient
+### 7a. Real patients: 5-fold cross-validation grouped by patient
 
 Every real patient's predictions come from a model that **never saw that patient**. Alert thresholds and calibration are chosen on separate held-out patients inside each training fold.
 
@@ -98,7 +125,7 @@ Every real patient's predictions come from a model that **never saw that patient
 
 ![Real validation](docs/figures/real_validation.png)
 
-### 5b. Synthetic cohort: what does each data stream add? (60 held-out patients)
+### 7b. Synthetic cohort: what does each data stream add? (60 held-out patients)
 
 | Lows (< 70) | AUROC | Per-patient AUROC | Lows warned | False alerts / day |
 |---|---|---|---|---|
@@ -131,7 +158,7 @@ Every real patient's predictions come from a model that **never saw that patient
 - Carbohydrates in the real data are estimated from food weights.
 - This is a research prototype, **not a medical device**.
 
-## 6. Technical stack
+## 8. Technical stack
 
 | Layer | Technology |
 |---|---|
@@ -144,7 +171,15 @@ Every real patient's predictions come from a model that **never saw that patient
 | Dashboard | Streamlit + Plotly |
 | Reports | Matplotlib (architecture diagram, slides, figures) |
 
-## 7. Run it
+## 9. Demo video, architecture diagram and presentation
+
+| Deliverable | Link |
+|---|---|
+| 🎥 Demo video (15–20 min, unlisted YouTube) | _Video link to be added_ |
+| 🏗️ Architecture diagram (PDF) | [docs/architecture.pdf](docs/architecture.pdf) |
+| 📊 Presentation (PDF): project details and outcomes | [docs/presentation.pdf](docs/presentation.pdf) |
+
+## 10. Run it
 
 ```bash
 pip install -r requirements.txt
@@ -158,7 +193,7 @@ streamlit run app.py                # clinician dashboard at http://localhost:85
 
 `python run_pipeline.py --quick` runs a smaller smoke test (~10 min). Results can be reproduced from a fixed seed (`--seed 7`).
 
-## 8. Repository layout
+## 11. Repository layout
 
 ```
 GlucoTwin/
@@ -190,12 +225,12 @@ GlucoTwin/
     └── figures/
 ```
 
-## 9. Data, privacy and credits
+## 12. Data, privacy and credits
 
 - **Real data:** ShanghaiT2DM, from Zhao Q., Zhu J., Shen X. *et al.*, "Chinese diabetes datasets for data-driven machine learning", *Scientific Data* 10, 35 (2023), https://doi.org/10.6084/m9.figshare.c.6310860. It is licensed **CC BY 4.0**, anonymised, and was collected with ethics approval and informed consent. The raw files are not included in this repository; `data/download_real_data.py` fetches them from the official source. The dashboard bundle (`artifacts/dashboard_bundle.joblib`) contains processed timelines derived from this dataset, which CC BY 4.0 permits with attribution.
 - **Synthetic data:** generated by this project. It contains no real person's information.
 - This complies with the challenge sandbox rules, the DPDP Act 2023 and HIPAA.
 
-## 10. License
+## 13. Open-source license
 
 Code is released under the [MIT License](LICENSE). The ShanghaiT2DM dataset keeps its own CC BY 4.0 licence. Third-party libraries keep their own licences: NumPy, pandas and scikit-learn (BSD-3), Streamlit (Apache-2.0), Plotly (MIT), Matplotlib (PSF-based).
