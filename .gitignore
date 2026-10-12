@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.venv/
+# real dataset: fetch with `python data/download_real_data.py`
+data/real_shanghai_raw/
+artifacts/full_run.log

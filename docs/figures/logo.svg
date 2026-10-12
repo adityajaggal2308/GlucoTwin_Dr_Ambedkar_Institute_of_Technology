@@ -1,0 +1,10 @@
+<svg width="256" height="256" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gtA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14b8a6"/><stop offset="1" stop-color="#3b82f6"/></linearGradient>
+    <linearGradient id="gtB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#38bdf8"/></linearGradient>
+  </defs>
+  <path d="M40 6 C40 6 24 26 24 38 C24 46.84 31.16 54 40 54 C48.84 54 56 46.84 56 38 C56 26 40 6 40 6 Z" fill="url(#gtB)" opacity="0.75"/>
+  <path d="M24 6 C24 6 8 26 8 38 C8 46.84 15.16 54 24 54 C32.84 54 40 46.84 40 38 C40 26 24 6 24 6 Z" fill="url(#gtA)"/>
+  <polyline points="4,40 16,40 21,31 27,49 33,25 38,44 42,37 60,37" fill="none" stroke="#ffffff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="33" cy="25" r="2.6" fill="#ffffff"/>
+</svg>

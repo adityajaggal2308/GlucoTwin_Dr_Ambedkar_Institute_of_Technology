@@ -1,0 +1,263 @@
+{
+  "cohort": {
+    "synthetic_patients": 400,
+    "synthetic_days": 14,
+    "real_recordings": 109,
+    "real_people": 100,
+    "horizon_min": 120,
+    "high_mgdl": 180,
+    "low_mgdl": 70,
+    "cv_folds": 5,
+    "split": {
+      "train": 280,
+      "val": 60,
+      "test": 60
+    }
+  },
+  "synthetic": {
+    "spike": {
+      "EHR only (static)": {
+        "auroc": 0.8824,
+        "auprc": 0.5964,
+        "per_patient_auroc": 0.8522,
+        "threshold": 0.241,
+        "sensitivity": 0.729,
+        "ppv": 0.491,
+        "prevalence": 0.1644,
+        "rows": 38720,
+        "events": 902,
+        "events_warned_pct": 80.5,
+        "median_lead_min": 120.0,
+        "warned_30min_plus_pct": 77.6,
+        "false_alerts_per_day": 1.35
+      },
+      "Wearables + CGM only (dynamic)": {
+        "auroc": 0.9273,
+        "auprc": 0.7354,
+        "per_patient_auroc": 0.8925,
+        "threshold": 0.336,
+        "sensitivity": 0.712,
+        "ppv": 0.63,
+        "prevalence": 0.1644,
+        "rows": 38720,
+        "events": 902,
+        "events_warned_pct": 94.8,
+        "median_lead_min": 105.0,
+        "warned_30min_plus_pct": 86.3,
+        "false_alerts_per_day": 1.22
+      },
+      "Fused EHR + dynamic": {
+        "auroc": 0.9287,
+        "auprc": 0.75,
+        "per_patient_auroc": 0.8997,
+        "threshold": 0.296,
+        "sensitivity": 0.756,
+        "ppv": 0.614,
+        "prevalence": 0.1644,
+        "rows": 38720,
+        "events": 902,
+        "events_warned_pct": 95.2,
+        "median_lead_min": 105.0,
+        "warned_30min_plus_pct": 88.2,
+        "false_alerts_per_day": 1.33
+      },
+      "GlucoTwin (fused + twin)": {
+        "auroc": 0.927,
+        "auprc": 0.7483,
+        "per_patient_auroc": 0.9033,
+        "threshold": 0.324,
+        "sensitivity": 0.73,
+        "ppv": 0.627,
+        "prevalence": 0.1644,
+        "rows": 38720,
+        "events": 902,
+        "events_warned_pct": 93.8,
+        "median_lead_min": 105.0,
+        "warned_30min_plus_pct": 87.3,
+        "false_alerts_per_day": 1.24
+      }
+    },
+    "low": {
+      "EHR only (static)": {
+        "auroc": 0.9518,
+        "auprc": 0.1213,
+        "per_patient_auroc": 0.8175,
+        "threshold": 0.033,
+        "sensitivity": 0.39,
+        "ppv": 0.131,
+        "prevalence": 0.0072,
+        "rows": 51134,
+        "events": 52,
+        "events_warned_pct": 50.0,
+        "median_lead_min": 120.0,
+        "warned_30min_plus_pct": 50.0,
+        "false_alerts_per_day": 0.17
+      },
+      "Wearables + CGM only (dynamic)": {
+        "auroc": 0.9812,
+        "auprc": 0.5506,
+        "per_patient_auroc": 0.9622,
+        "threshold": 0.044,
+        "sensitivity": 0.564,
+        "ppv": 0.457,
+        "prevalence": 0.0072,
+        "rows": 51134,
+        "events": 52,
+        "events_warned_pct": 80.8,
+        "median_lead_min": 90.0,
+        "warned_30min_plus_pct": 73.1,
+        "false_alerts_per_day": 0.19
+      },
+      "Fused EHR + dynamic": {
+        "auroc": 0.9854,
+        "auprc": 0.5503,
+        "per_patient_auroc": 0.9609,
+        "threshold": 0.031,
+        "sensitivity": 0.586,
+        "ppv": 0.442,
+        "prevalence": 0.0072,
+        "rows": 51134,
+        "events": 52,
+        "events_warned_pct": 86.5,
+        "median_lead_min": 90.0,
+        "warned_30min_plus_pct": 82.7,
+        "false_alerts_per_day": 0.2
+      },
+      "GlucoTwin (fused + twin)": {
+        "auroc": 0.9853,
+        "auprc": 0.5395,
+        "per_patient_auroc": 0.9702,
+        "threshold": 0.059,
+        "sensitivity": 0.542,
+        "ppv": 0.501,
+        "prevalence": 0.0072,
+        "rows": 51134,
+        "events": 52,
+        "events_warned_pct": 86.5,
+        "median_lead_min": 75.0,
+        "warned_30min_plus_pct": 80.8,
+        "false_alerts_per_day": 0.14
+      }
+    }
+  },
+  "real": {
+    "spike": {
+      "Trained on synthetic only": {
+        "auroc": 0.7481,
+        "auprc": 0.3394,
+        "per_patient_auroc": 0.6896,
+        "threshold": "chosen per fold",
+        "sensitivity": 0.329,
+        "ppv": 0.35,
+        "prevalence": 0.145,
+        "rows": 73007,
+        "events": 1482,
+        "events_warned_pct": 69.5,
+        "median_lead_min": 60.0,
+        "warned_30min_plus_pct": 55.1,
+        "false_alerts_per_day": 1.69
+      },
+      "Trained on real patients": {
+        "auroc": 0.8715,
+        "auprc": 0.5674,
+        "per_patient_auroc": 0.8585,
+        "threshold": "chosen per fold",
+        "sensitivity": 0.588,
+        "ppv": 0.521,
+        "prevalence": 0.145,
+        "rows": 73007,
+        "events": 1482,
+        "events_warned_pct": 91.1,
+        "median_lead_min": 90.0,
+        "warned_30min_plus_pct": 79.2,
+        "false_alerts_per_day": 1.85
+      },
+      "Trained on synthetic + real": {
+        "auroc": 0.8733,
+        "auprc": 0.5716,
+        "per_patient_auroc": 0.8633,
+        "threshold": "chosen per fold",
+        "sensitivity": 0.601,
+        "ppv": 0.514,
+        "prevalence": 0.145,
+        "rows": 73007,
+        "events": 1482,
+        "events_warned_pct": 93.2,
+        "median_lead_min": 90.0,
+        "warned_30min_plus_pct": 82.6,
+        "false_alerts_per_day": 1.95
+      },
+      "dashboard_uses": "Trained on synthetic + real"
+    },
+    "low": {
+      "Trained on synthetic only": {
+        "auroc": 0.683,
+        "auprc": 0.0731,
+        "per_patient_auroc": 0.7148,
+        "threshold": "chosen per fold",
+        "sensitivity": 0.031,
+        "ppv": 0.192,
+        "prevalence": 0.0255,
+        "rows": 86177,
+        "events": 315,
+        "events_warned_pct": 14.9,
+        "median_lead_min": 15.0,
+        "warned_30min_plus_pct": 5.4,
+        "false_alerts_per_day": 0.13
+      },
+      "Trained on real patients": {
+        "auroc": 0.8594,
+        "auprc": 0.1971,
+        "per_patient_auroc": 0.8385,
+        "threshold": "chosen per fold",
+        "sensitivity": 0.456,
+        "ppv": 0.196,
+        "prevalence": 0.0255,
+        "rows": 86177,
+        "events": 315,
+        "events_warned_pct": 81.3,
+        "median_lead_min": 75.0,
+        "warned_30min_plus_pct": 69.2,
+        "false_alerts_per_day": 1.25
+      },
+      "Trained on synthetic + real": {
+        "auroc": 0.8486,
+        "auprc": 0.19,
+        "per_patient_auroc": 0.8228,
+        "threshold": "chosen per fold",
+        "sensitivity": 0.518,
+        "ppv": 0.141,
+        "prevalence": 0.0255,
+        "rows": 86177,
+        "events": 315,
+        "events_warned_pct": 87.3,
+        "median_lead_min": 90.0,
+        "warned_30min_plus_pct": 75.9,
+        "false_alerts_per_day": 1.66
+      },
+      "dashboard_uses": "Trained on real patients"
+    }
+  },
+  "importance": {
+    "spike": {
+      "Daily routine": 0.0663,
+      "Glucose trend (CGM)": 0.0623,
+      "Activity & heart (wearable)": 0.0505,
+      "Twin physiology": 0.028,
+      "EHR profile": 0.0199,
+      "Meals": 0.0092,
+      "Insulin doses": 0.0034,
+      "Sleep & recovery (wearable)": -0.0006
+    },
+    "low": {
+      "Glucose trend (CGM)": 0.103,
+      "EHR profile": 0.0434,
+      "Insulin doses": 0.0351,
+      "Meals": 0.0031,
+      "Activity & heart (wearable)": 0.003,
+      "Daily routine": 0.0028,
+      "Twin physiology": 0.0004,
+      "Sleep & recovery (wearable)": -0.0003
+    }
+  }
+}
