@@ -173,13 +173,18 @@ GlucoTwin/
 │   ├── twin.py                # mechanistic twin: calibration & what-if forecast
 │   ├── features.py            # stream fusion & labels (lows and highs)
 │   ├── compare.py             # group comparisons + per-patient risk factors
-│   └── model.py               # models, calibration, metrics, explanations
+│   ├── model.py               # models, calibration, metrics, explanations
+│   ├── report.py              # printable 2-page PDF patient report
+│   └── branding.py            # GlucoTwin logo (SVG + matplotlib)
 ├── data/
 │   ├── download_real_data.py  # fetches the real dataset
 │   ├── ehr_synthetic.csv      # synthetic EHR (400 patients)
 │   └── wearables_sample_5_patients.csv
 ├── artifacts/                 # trained models + metrics.json
+├── .streamlit/config.toml     # dashboard theme
 └── docs/
+    ├── make_docs.py           # builds architecture.pdf and presentation.pdf
+    ├── real_validation_figure.py  # redraws real_validation.png from metrics.json
     ├── architecture.pdf       # architecture diagram
     ├── presentation.pdf       # project presentation
     └── figures/
@@ -198,5 +203,3 @@ GlucoTwin/
 ## 11. License
 
 Code is released under the [MIT License](LICENSE). The ShanghaiT2DM dataset keeps its own CC BY 4.0 licence. Third-party libraries keep their own licences: NumPy, pandas and scikit-learn (BSD-3), Streamlit (Apache-2.0), Plotly (MIT), Matplotlib (PSF-based).
-#   G l u c o T w i n _ D r _ A m b e d k a r _ I n s t i t u t e _ o f _ T e c h n o l o g y  
- 
